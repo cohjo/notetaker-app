@@ -49,3 +49,9 @@ def edit_note():
     selected.body = input('New body:\n')
     selected.save()
     print('\nNote changed successfuly\n')
+
+def delete_note():
+    select = input('Which note would you like to delete?: ')
+    selected = Note.get(Note.title == select)
+    selected.delete_instance()
+
