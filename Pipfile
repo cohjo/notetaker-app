@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 peewee = "*"
 psycopg2 = "*"
-speech-recognition = "*"
+pyaudio = "*"
 
 [requires]
 python_version = "3.7"

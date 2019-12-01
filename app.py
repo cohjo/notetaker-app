@@ -1,10 +1,7 @@
 from peewee import *
 import datetime
-
+import pyaudio
 import speech_recognition as sr
-r = sr.Recognizer()
-with sr.Microphone() as source:
-    audio = r.listen(source)
 
 db = PostgresqlDatabase('notetaker', user='postgres', password='',
                         host='localhost', port=5432)
@@ -62,9 +59,19 @@ def delete_note():
     selected = Note.get(Note.title == select)
     selected.delete_instance()
 
+def listener():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+    try:
+        print(r.recognize_google(audio))
+    except Exception:
+        print("Couldn't quite hear that.")
+
 def run_notetaker():
     print('\nWhat would you like to do?')
-    choice = input('(new, edit title, edit body, edit note, list, delete): ')
+    choice = listener()
+    #input('(new, edit title, edit body, edit note, list, delete): ')
     if choice == 'new':
         create_note()
         run_notetaker()
@@ -82,6 +89,8 @@ def run_notetaker():
         run_notetaker()
     elif choice == 'delete':
         delete_note()
+        run_notetaker()
+    elif choice == "Couldn't quite hear that.":
         run_notetaker()
     else:
         print('\nSee you next time!')
