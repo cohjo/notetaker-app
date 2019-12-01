@@ -1,6 +1,11 @@
 from peewee import *
 import datetime
 
+import speech_recognition as sr
+r = sr.Recognizer()
+with sr.Microphone() as source:
+    audio = r.listen(source)
+
 db = PostgresqlDatabase('notetaker', user='postgres', password='',
                         host='localhost', port=5432)
 db.connect()
