@@ -16,6 +16,14 @@ class Note(BaseModel):
 
 db.create_tables([Note])
 
-note1 = Note(title = 'First Note', body = 'Hello world')
-note1.save()
+def create_note():
+    new_title = input('Title: ')
+    new_body = input('Note: ')
+    new_note = Note(title = new_title, body = new_body)
+    new_note.save()
+    print('\nAdded to NoteTaker\n')
 
+def notes_list():
+    print('Your NoteTaker:\n')
+    for i in Note.select()
+        print(i.title + ' last edited on: ' + i.edited + ':\n\n' + i.body + '\n')
