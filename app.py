@@ -26,7 +26,8 @@ def listener():
         result = r.recognize_google(audio)
         return result
     except Exception:
-        print("Couldn't quite hear that.")
+        result = "Couldn't quite hear that."
+        return result
 
 def create_note():
     print('Title: ')
@@ -42,16 +43,25 @@ def create_note():
     print('******************\n')
 
 def notes_list():
-    print('Your NoteTaker:\n')
+    print('***************')
+    print('Your NoteTaker:')
+    print('***************\n')
     for i in Note.select():
-        print(i.title + ' was created ' + i.edited + ':\n\n' + i.body + '\n')
+        print(i.title + ' was created ' + str(i.edited) + ':\n' + i.body + '\n\n')
 
 def edit_note_title():
-    select = input('Which note would you like to edit the title for?: ')
+    notes_list()
+    print('Which note would you like to edit the title for?: ')
+    select = listener()
     selected = Note.get(Note.title == select)
-    selected.title = input('New title: ')
+    print(select)
+    print('New title: ')
+    selected.title = listener()
+    print(selected.title)
     selected.save()
-    print('\nTitle changed successfully\n')
+    print('\n**************************')
+    print('Title changed successfully')
+    print('**************************\n')
 
 def edit_note_body():
     select = input('Which note would you like to edit the body for?: ')
@@ -75,30 +85,39 @@ def delete_note():
 
 def run_notetaker():
     print('\nWhat would you like to do?')
+    print('SAY (new, edit title, edit body, edit note, list, delete):')
     choice = listener()
-    #input('(new, edit title, edit body, edit note, list, delete): ')
+    print()
+
     if choice == 'new':
         print('new')
         create_note()
         run_notetaker()
     elif choice == 'edit title':
+        print('edit title')
         edit_note_title()
         run_notetaker()
     elif choice == 'edit body':
+        print('edit body')
         edit_note_body()
         run_notetaker()
     elif choice == 'edit note':
+        print('edit note')
         edit_note()
         run_notetaker()
     elif choice == 'list':
+        print('list')
         notes_list()
         run_notetaker()
     elif choice == 'delete':
+        print('delete')
         delete_note()
         run_notetaker()
     elif choice == "Couldn't quite hear that.":
+        print("Couldn't quite hear that.")
         run_notetaker()
     else:
+        print(choice)
         print('\nSee you next time!')
 
 print('\n\n*********************')
