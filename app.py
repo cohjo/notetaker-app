@@ -11,7 +11,7 @@ class BaseModel(Model):
 
 class Note(BaseModel):
     title = TextField()
-    created = DateTimeField(default = datetime.datetime.now)
+    edited = DateTimeField(default = datetime.datetime.now)
     body = TextField()
 
 db.create_tables([Note])
@@ -21,12 +21,14 @@ def create_note():
     new_body = input('Note: ')
     new_note = Note(title = new_title, body = new_body)
     new_note.save()
-    print('\nAdded to NoteTaker\n')
+    print('\n******************')
+    print('Added to NoteTaker')
+    print('******************\n')
 
 def notes_list():
     print('Your NoteTaker:\n')
-    for i in Note.select()
-        print(i.title + ' last edited on: ' + i.edited + ':\n\n' + i.body + '\n')
+    for i in Note.select():
+        print(i.title + ' was created ' + i.edited + ':\n\n' + i.body + '\n')
 
 def edit_note_title():
     select = input('Which note would you like to edit the title for?: ')
@@ -54,4 +56,33 @@ def delete_note():
     select = input('Which note would you like to delete?: ')
     selected = Note.get(Note.title == select)
     selected.delete_instance()
+
+def run_notetaker():
+    print('\nWhat would you like to do?')
+    choice = input('(new, edit title, edit body, edit note, list, delete): ')
+    if choice == 'new':
+        create_note()
+        run_notetaker()
+    elif choice == 'edit title':
+        edit_note_title()
+        run_notetaker()
+    elif choice == 'edit body':
+        edit_note_body()
+        run_notetaker()
+    elif choice == 'edit note':
+        edit_note()
+        run_notetaker()
+    elif choice == 'list':
+        notes_list()
+        run_notetaker()
+    elif choice == 'delete':
+        delete_note()
+        run_notetaker()
+    else:
+        print('\nSee you next time!')
+
+print('\n\n*********************')
+print('Welcome to NoteTaker!')
+print('*********************')
+run_notetaker()
 
