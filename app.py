@@ -11,7 +11,7 @@ class BaseModel(Model):
 
 class Note(BaseModel):
     title = TextField()
-    edited = DateTimeField(default = datetime.datetime.now)
+    created = DateTimeField(default = datetime.datetime.now)
     body = TextField()
 
 db.create_tables([Note])
@@ -27,3 +27,25 @@ def notes_list():
     print('Your NoteTaker:\n')
     for i in Note.select()
         print(i.title + ' last edited on: ' + i.edited + ':\n\n' + i.body + '\n')
+
+def edit_note_title():
+    select = input('Which note would you like to edit the title for?: ')
+    selected = Note.get(Note.title == select)
+    selected.title = input('New title: ')
+    selected.save()
+    print('\nTitle changed successfully\n')
+
+def edit_note_body():
+    select = input('Which note would you like to edit the body for?: ')
+    selected = Note.get(Note.title == select)
+    selected.body = input('New body:\n')
+    selected.save()
+    print('\nBody changed successfully\n')
+
+def edit_note():
+    select = input('Which note would you like to edit?: ')
+    selected = Note.get(Note.title == select)
+    selected.title = input('New title: ')
+    selected.body = input('New body:\n')
+    selected.save()
+    print('\nNote changed successfuly\n')
