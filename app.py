@@ -49,7 +49,7 @@ def notes_list():
     print('Your NoteTaker:')
     print('***************\n')
     for i in Note.select():
-        print(i.title + ' was created ' + str(i.edited) + ':\n' + i.body + '\n\n')
+        print(i.title + '\nwas created ' + str(i.edited) + ':\n' + i.body + '\n')
 
 def edit_note_title():
     notes_list()
@@ -156,15 +156,8 @@ def create_note_text():
     print('Added to NoteTaker')
     print('******************\n')
 
-def notes_list_text():
-    print('***************')
-    print('Your NoteTaker:')
-    print('***************\n')
-    for i in Note.select():
-        print(i.title + ' was created ' + i.edited + ':\n\n' + i.body + '\n')
-
 def edit_note_title_text():
-    notes_list_text()
+    notes_list()
     select = input('Which note would you like to edit the title for?: ')
     selected = Note.get(Note.title == select)
     selected.title = input('New title: ')
@@ -174,7 +167,7 @@ def edit_note_title_text():
     print('**************************\n')
 
 def edit_note_body_text():
-    notes_list_text()
+    notes_list()
     select = input('Which note would you like to edit the body for?: ')
     selected = Note.get(Note.title == select)
     selected.body = input('New body:\n')
@@ -184,18 +177,18 @@ def edit_note_body_text():
     print('*************************\n')
 
 def edit_note_text():
-    notes_list_text()
+    notes_list()
     select = input('Which note would you like to edit?: ')
     selected = Note.get(Note.title == select)
     selected.title = input('New title: ')
-    selected.body = input('New body:\n')
+    selected.body = input('New body: ')
     selected.save()
     print('\n*************************')
     print('Note changed successfully')
     print('*************************\n')
 
 def delete_note_text():
-    notes_list_text()
+    notes_list()
     select = input('Which note would you like to delete?: ')
     selected = Note.get(Note.title == select)
     selected.delete_instance()
@@ -219,7 +212,7 @@ def run_notetaker_text():
         edit_note_text()
         run_notetaker_text()
     elif choice == 'list':
-        notes_list_text()
+        notes_list()
         run_notetaker_text()
     elif choice == 'delete':
         delete_note_text()
