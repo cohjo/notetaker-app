@@ -18,6 +18,7 @@ class Note(BaseModel):
 
 db.create_tables([Note])
 
+
 def listener():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -64,24 +65,46 @@ def edit_note_title():
     print('**************************\n')
 
 def edit_note_body():
-    select = input('Which note would you like to edit the body for?: ')
+    notes_list()
+    print('Which note would you like to edit the body for?: ')
+    select = listener()
     selected = Note.get(Note.title == select)
-    selected.body = input('New body:\n')
+    print(select)
+    print('New body:\n')
+    selected.body = listener()
+    print(selected.body)
     selected.save()
-    print('\nBody changed successfully\n')
+    print('\n*************************')
+    print('Body changed successfully')
+    print('*************************\n')
 
 def edit_note():
-    select = input('Which note would you like to edit?: ')
+    notes_list()
+    print('Which note would you like to edit?: ')
+    select = listener()
     selected = Note.get(Note.title == select)
-    selected.title = input('New title: ')
-    selected.body = input('New body:\n')
+    print(select)
+    print('New title: ')
+    selected.title = listener()
+    print(selected.title)
+    print('New body: ')
+    selected.body = listner()
+    print(selected.body)
     selected.save()
-    print('\nNote changed successfuly\n')
+    print('\n*************************')
+    print('Note changed successfully')
+    print('*************************\n')
 
 def delete_note():
-    select = input('Which note would you like to delete?: ')
+    notes_list()
+    print('Which note would you like to delete?: ')
+    select = listener()
     selected = Note.get(Note.title == select)
+    print(select)
     selected.delete_instance()
+    print('\n*************************')
+    print('Note deleted successfully')
+    print('*************************\n')
 
 def run_notetaker():
     print('\nWhat would you like to do?')
