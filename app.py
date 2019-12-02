@@ -230,7 +230,7 @@ def run_notetaker_text():
 print('\n\n*********************')
 print('Welcome to NoteTaker!')
 print('*********************\n')
-dec = intput('Would you like to use voice or text input? (v / t): ')
+dec = input('Would you like to use voice or text input? (v / t): ')
 if dec == 't': run_notetaker_text()
 elif dec == 'v': run_notetaker()
 else: 'Goodbye!'
