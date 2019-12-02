@@ -18,6 +18,7 @@ class Note(BaseModel):
 
 db.create_tables([Note])
 
+# FUNCTIONS FOR SPEECH RECOGNITION
 
 def listener():
     r = sr.Recognizer()
@@ -141,6 +142,89 @@ def run_notetaker():
         run_notetaker()
     else:
         print(choice)
+        print('\nSee you next time!')
+
+# FUNCTIONS WITHOUT SPEECH RECOGNITION
+
+def create_note_text():
+    new_title = input('Title: ')
+    new_body = input('Note: ')
+    new_note = Note(title = new_title, body = new_body)
+    new_note.save()
+    print('\nAdded to NoteTaker\n')
+    print('\n******************')
+    print('Added to NoteTaker')
+    print('******************\n')
+
+def notes_list_text():
+    print('***************')
+    print('Your NoteTaker:')
+    print('***************\n')
+    for i in Note.select():
+        print(i.title + ' was created ' + i.edited + ':\n\n' + i.body + '\n')
+
+def edit_note_title_text():
+    notes_list_text()
+    select = input('Which note would you like to edit the title for?: ')
+    selected = Note.get(Note.title == select)
+    selected.title = input('New title: ')
+    selected.save()
+    print('\n**************************')
+    print('Title changed successfully')
+    print('**************************\n')
+
+def edit_note_body_text():
+    notes_list_text()
+    select = input('Which note would you like to edit the body for?: ')
+    selected = Note.get(Note.title == select)
+    selected.body = input('New body:\n')
+    selected.save()
+    print('\n*************************')
+    print('Body changed successfully')
+    print('*************************\n')
+
+def edit_note_text():
+    notes_list_text()
+    select = input('Which note would you like to edit?: ')
+    selected = Note.get(Note.title == select)
+    selected.title = input('New title: ')
+    selected.body = input('New body:\n')
+    selected.save()
+    print('\n*************************')
+    print('Note changed successfully')
+    print('*************************\n')
+
+def delete_note_text():
+    notes_list_text()
+    select = input('Which note would you like to delete?: ')
+    selected = Note.get(Note.title == select)
+    selected.delete_instance()
+    print('\n*************************')
+    print('Note deleted successfully')
+    print('*************************\n')
+
+def run_notetaker_text():
+    print('\nWhat would you like to do?')
+    choice = input('(new, edit title, edit body, edit note, list, delete): ')
+    if choice == 'new':
+        create_note_text()
+        run_notetaker_text()
+    elif choice == 'edit title':
+        edit_note_title_text()
+        run_notetaker_text()
+    elif choice == 'edit body':
+        edit_note_body_text()
+        run_notetaker_text()
+    elif choice == 'edit note':
+        edit_note_text()
+        run_notetaker_text()
+    elif choice == 'list':
+        notes_list_text()
+        run_notetaker_text()
+    elif choice == 'delete':
+        delete_note_text()
+        run_notetaker_text()
+    else:
         print('\nSee you next time!')
 
 print('\n\n*********************')
