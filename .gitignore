@@ -1,4 +1,3 @@
-./.gitignore
-./Pipfile
-./Pipfile.lock
-./.vscode/
+/Pipfile
+*.lock
+*.vscode/
